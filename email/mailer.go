@@ -15,11 +15,11 @@ type Emailer interface {
 
 func Send(b Emailer) error {
 	// Connect to the SMTP Server
-	servername := "smtp.mail.eu-west-1.awsapps.com:465"
+	servername := os.Getenv("smtpserver")
 
 	host, _, _ := net.SplitHostPort(servername)
 
-	auth := smtp.PlainAuth("", "james@codecubs.co.uk", os.Getenv("password"), host)
+	auth := smtp.PlainAuth("", os.Getenv("adminemail"), os.Getenv("password"), host)
 
 	tlsconfig := &tls.Config{
 		InsecureSkipVerify: true,

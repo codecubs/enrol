@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"net/mail"
+	"os"
 
 	"github.com/aws/aws-lambda-go/lambda"
 	"github.com/codecubs/enrol/email"
@@ -28,7 +29,7 @@ func HandleEnrolEvent(event MyEvent) (MyResponse, error) {
 	}
 
 	m := email.AdminEmail{
-		mail.Address{"", "james@codecubs.co.uk"},
+		mail.Address{"", os.Getenv("adminemail")},
 		"New Enrol",
 		"email: " + contactEmail,
 	}
