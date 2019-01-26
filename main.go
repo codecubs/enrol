@@ -18,15 +18,24 @@ type MyResponse struct {
 }
 
 func HandleEnrolEvent(event MyEvent) (MyResponse, error) {
+
+	contactEmail, err := email.SanitizeEmail(event.Email)
+	if err != nil {
+		return MyResponse{
+			Message: fmt.Sprintf("Something is wrong with the email: %s", err.Error()),
+			Ok:      false,
+		}, err
+	}
+
 	m := email.AdminEmail{
 		mail.Address{"", "james@codecubs.co.uk"},
 		"New Enrol",
-		"email: " + event.Email,
+		"email: " + contactEmail,
 	}
 
 	if err := email.Send(m); err != nil {
 		return MyResponse{
-			Message: fmt.Sprintf("Something went wrong: ", err.Error()),
+			Message: fmt.Sprintf("Something went wrong in enrolling: %s", err.Error()),
 			Ok:      false,
 		}, err
 	}
