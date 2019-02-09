@@ -10,7 +10,10 @@ import (
 )
 
 type MyEvent struct {
-	Email string `json:"email"`
+	Parent  string `json:"parent"`
+	Email   string `json:"email"`
+	Student string `json:"student"`
+	Group   string `json:"group"`
 }
 
 type MyResponse struct {
@@ -31,7 +34,7 @@ func HandleEnrolEvent(event MyEvent) (MyResponse, error) {
 	m := email.AdminEmail{
 		mail.Address{"", os.Getenv("adminemail")},
 		"New Enrol",
-		fmt.Sprintf("parent: %s, email:%s, student: %s, group %s", event.contactEmail,
+		fmt.Sprintf("parent: %s, email:%s, student: %s, group %s", event.Parent, event.contactEmail, event.Student, event.Group)
 	}
 
 	if err := email.Send(m); err != nil {
