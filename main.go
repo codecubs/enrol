@@ -34,7 +34,7 @@ func HandleEnrolEvent(event MyEvent) (MyResponse, error) {
 	m := email.AdminEmail{
 		mail.Address{"", os.Getenv("adminemail")},
 		"New Enrol",
-		fmt.Sprintf("parent: %s, email:%s, student: %s, group %s", event.Parent, event.contactEmail, event.Student, event.Group)
+		fmt.Sprintf("parent: %s, email:%s, student: %s, group %s", event.Parent, contactEmail, event.Student, event.Group),
 	}
 
 	if err := email.Send(m); err != nil {
